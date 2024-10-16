@@ -51,7 +51,10 @@ def delete_todo(id):
 
 @todos_bp.route("/<int:id>",methods=["GET"])
 def get_by_id(id):
-    car = [c for c in modelslist if c["id"]==id]
-    return jsonify(car)
+    car = next((c for c in modelslist if c.get("id")==id),None)
+    if car:
+        return jsonify(car)
+    return jsonify({"error" : "Not found "}),404
+
 
 
